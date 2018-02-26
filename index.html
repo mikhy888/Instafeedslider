@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css">
+	<style type="text/css">
+	.slick-slide {
+		padding: 10px;
+	}
+		img {
+			max-width: 100%;
+		}
+	</style>
+</head>
+<body>
+
+
+
+
+
+<div id="instafeed-gallery-feed" class=" gallery row no-gutter">
+  <!--  instagram feed will load here -->
+
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/instafeed.js/1.4.1/instafeed.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+
+<script type="text/javascript">
+// http://jelled.com/instagram/access-token
+
+var galleryFeed = new Instafeed({
+  get: "user",
+  userId: 1416163250,
+  //accessToken: "4622774.7cbaeb5.ec8c5041b92b44ada03e4a4a9153bc54", working
+  accessToken: "1416163250.3697b52.dbbd874a5be34cc79b4e429b131b3722",
+  resolution: "standard_resolution",
+  useHttp: "true",
+  limit: 15,
+  template: 
+    // '<a href="{{image}}">'+
+      '<div class="img-featured-container">'+
+        '<div class="img-backdrop"></div>'+
+        '<div class="description-container">'+
+          '<span class="likes"><i class="icon ion-heart"></i> {{likes}}</span>'+
+          '<span class="comments"><i class="icon ion-chatbubble"></i> {{comments}}</span>'+
+        '</div>'+
+        '<img src="{{image}}" class="img-responsive">'+
+      '</div>',
+    // '</a>'+
+  target: "instafeed-gallery-feed",
+  after: function() {
+    
+    // disable button if no more results to load
+    if (!this.hasNext()) {
+      btnInstafeedLoad.setAttribute('disabled', 'disabled');
+    }
+    
+    $(document).ready(function(){
+     $(".gallery").slick({
+          infinite: true,
+          slidesToShow: 3,
+          slidesToScroll: 3
+        });
+    });
+  }
+});
+
+galleryFeed.run();
+
+var btnInstafeedLoad = document.getElementById("btn-instafeed-load");
+btnInstafeedLoad.addEventListener("click", function() {
+  galleryFeed.next()
+});
+
+
+
+</script>
+
+</body>
+</html>
